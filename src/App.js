@@ -5,19 +5,42 @@ import Dashboard from './pages/Homepage/Dashboard';
 import Login from './pages/Login/Login';
 import Process from './pages/Process/Process';
 import Account from './pages/Account/Account';
-import ProductInfo from './pages/ProductInfo/ProductInfo';
+import AppReview from './pages/AppReview';
+import Cart from './pages/Cart';
+import Item from './pages/Item/Item';
+import Signup from './pages/Login/SignUp';
+import Requireauth from './pages/Login/Requireauth';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import MyDashboard from './pages/MyDashboard';
+import MyReview from './pages/MyReview';
+
 function App() {
   return (
-    <div>
-      <NavBar></NavBar>
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/process" element={<Process />} />
-        <Route path="/account" element={<Account />} />
-        <Route path="/productInfo" element={<ProductInfo />} />
-      </Routes>
-    </div>
+    <section>
+      <div className='max-w-7xl mx-auto px-12'>
+        <NavBar></NavBar>
+        <Routes>
+          <Route path="/" element={<Dashboard></Dashboard>} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="/process" element={<Requireauth><Process /></Requireauth>} />
+          <Route path="/account" element={<Requireauth><Account /></Requireauth>} />
+
+          <Route path="/Item" element={<Requireauth><Item /></Requireauth>} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/myDashboard" element={
+            <Requireauth>
+              <MyDashboard />
+            </Requireauth>
+          }>
+            <Route index element={<Cart></Cart>}></Route>
+            <Route path="review" element={<MyReview></MyReview>}></Route>
+          </Route>
+        </Routes>
+        <ToastContainer />
+      </div>
+    </section>
+
   );
 }
 

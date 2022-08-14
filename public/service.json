@@ -1,0 +1,37 @@
+[
+    {
+        "_id": 1,
+        "cardtittle": "Clothings",
+        "des": "Ensuring the highest quality of any product is our first priority.It is ...",
+        "img": "https://mk0thefunempireuxo6i.kinstacdn.com/wp-content/uploads/2021/06/store9-1024x640.jpg",
+        "item_number": "5"
+    },
+    {
+        "_id": 2,
+        "cardtittle": "Fasionable Bags",
+        "des": "Ensuring the highest quality of any product is our first priority.It is ...",
+        "img": "https://images.pexels.com/photos/135620/pexels-photo-135620.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+        "item_number": "9"
+    },
+    {
+        "_id": 3,
+        "cardtittle": "Designable Bags",
+        "des": "Ensuring the highest quality of any product is our first priority.It is ...",
+        "img": "https://st.depositphotos.com/3004545/4215/i/600/depositphotos_42153321-stock-photo-lot-of-women-shoes-in.jpg",
+        "item_number": "7"
+    },
+    {
+        "_id": 4,
+        "cardtittle": "Shoes",
+        "des": "Ensuring the highest quality of any product is our first priority.It is ...",
+        "img": "https://thumbs.dreamstime.com/b/interior-shoe-store-modern-european-mall-bright-fashionable-40302645.jpg",
+        "item_number": "0"
+    },
+    {
+        "_id": 5,
+        "cardtittle": "Outgoing shoes",
+        "des": "Ensuring the highest quality of any product is our first priority.It is ...",
+        "img": "https://image.shutterstock.com/image-photo/bright-large-shoe-store-new-260nw-166621037.jpg",
+        "item_number": "10"
+    }
+]

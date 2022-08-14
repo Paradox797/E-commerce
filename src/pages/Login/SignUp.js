@@ -1,45 +1,89 @@
-import React from 'react';
-import { useSignInWithEmailAndPassword, useSignInWithGoogle } from 'react-firebase-hooks/auth';
+import React from 'react'
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import auth from '../../firebase_init';
 import { useForm } from "react-hook-form";
 import Loading from '../../Shared/Loading';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const SignUp = () => {
     const [signInWithGoogle, guser, gloading, gerror] = useSignInWithGoogle(auth);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [
-        signInWithEmailAndPassword,
+        createUserWithEmailAndPassword,
         user,
         loading,
         error,
-    ] = useSignInWithEmailAndPassword(auth);
+    ] = useCreateUserWithEmailAndPassword(auth);
 
-    let signInerror;
+    const [updateProfile, updating, updateError] = useUpdateProfile(auth);
     const navigate = useNavigate();
-    const location = useLocation();
-    let from = location.state?.from?.pathname || "/";
+    let signInerror;
 
-    if (loading || gloading) {
+    if (loading || gloading || updating) {
         return <Loading></Loading>
     }
-    if (error || gerror) {
-        signInerror = <p className='text-red-500'><small>{error?.message || gerror?.message}</small></p>
+    if (error || gerror || updateError) {
+        signInerror = <p className='text-red-500'><small>{error?.message || gerror?.message || updateError?.message}</small></p>
     }
 
-    if (user || guser) {
-        navigate(from, { replace: true });
+    if (guser) {
+        console.log(guser);
     }
-    const onSubmit = data => {
+    const onSubmit = async data => {
         console.log(data);
-        signInWithEmailAndPassword(data.email, data.password);
+        createUserWithEmailAndPassword(data.email, data.password).then((user) => console.log(user));
+        // console.log(userDetail);
+        await updateProfile({ displayName: data.name });
+        console.log('Update Done');
+        navigate('/');
     }
     return (
         <div className='flex h-screen justify-center items-center'>
             <div className="card w-96 bg-base-100 shadow-xl">
                 <div className="card-body">
-                    <h2 className="text-center text-3xl font-bold"> Login </h2>
+                    <h2 className="text-center text-3xl font-bold"> SignUP </h2>
                     <form onSubmit={handleSubmit(onSubmit)}>
+
+
+                        <div class="form-control w-full max-w-xs">
+                            <label class="label">
+                                <span class="label-text">Enter Your Name</span>
+                            </label>
+                            <input type="text" placeholder="Your Name " class="input input-bordered w-full max-w-xs"
+                                {...register("name", {
+                                    required: {
+                                        value: true,
+                                        message: 'Name is required'
+                                    }
+
+                                })}
+                            />
+                            <label class="label">
+                                {errors.name?.type === 'required' && <span class="label-text-alt text-red-500">{errors.name.message}</span>}
+
+                            </label>
+                        </div>
+
+
+                        <div class="form-control w-full max-w-xs">
+                            <label class="label">
+                                <span class="label-text">Enter Your Location(in detail)</span>
+                            </label>
+                            <input type="text" placeholder="Your Location here " class="input input-bordered w-full max-w-xs"
+                                {...register("location", {
+                                    required: {
+                                        value: true,
+                                        message: 'Location is required'
+                                    }
+
+                                })}
+                            />
+                            <label class="label">
+                                {errors.location?.type === 'required' && <span class="label-text-alt text-red-500">{errors.location.message}</span>}
+
+                            </label>
+                        </div>
+
 
                         <div class="form-control w-full max-w-xs">
                             <label class="label">
@@ -87,12 +131,16 @@ const Login = () => {
                             </label>
                         </div>
 
+
+
+
+
                         {signInerror}
-                        <input className='btn input input-bordered w-full max-w-xs ' type="submit" value="Login" />
+                        <input className='btn input input-bordered w-full max-w-xs ' type="submit" value="SignUp" />
                     </form>
                     <p>
                         <small>
-                            New to E-commerce site<Link className='text-primary' to="/signup">Create new account</Link>
+                            Already have a acconut?<Link className='text-primary' to="/login">Login here</Link>
                         </small>
 
                     </p>
@@ -106,6 +154,6 @@ const Login = () => {
             </div>
         </div>
     );
-}
+};
 
-export default Login;
+export default SignUp;
