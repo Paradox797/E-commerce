@@ -1,20 +1,20 @@
 import React from 'react'
-import {createUserWithEmailAndPassword} from 'firebase/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
 //import { useCreateUserWithEmailAndPassword,useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import auth from '../../firebase_init';
 import { useForm } from "react-hook-form";
 import Loading from '../../Shared/Loading';
 import { Link, useNavigate } from 'react-router-dom';
-import {useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile} from "react-firebase-hooks/auth";
-import {toast} from "react-toastify";
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from "react-firebase-hooks/auth";
+import { toast } from "react-toastify";
 
-const register = async()=>{
-    try{
-        const firebaseUser = await createUserWithEmailAndPassword(auth,"ashraf@gmail.com",'1234163');
-        console.log(firebaseUser);
-    }catch (e) {
-        console.log(e);
-    }
+const saveToLocalStorage = (response)=>{
+    localStorage.setItem("currentUser",JSON.stringify(response));
+}
+const getFromLocalStorage = ()=>{
+   let currentUser = localStorage.getItem('currentUser') ;
+    currentUser = JSON.parse(currentUser);
+    console.log(currentUser)
 }
 const SignUp = () => {
     const [signInWithGoogle, guser, gloading, gerror] = useSignInWithGoogle(auth);
@@ -42,17 +42,19 @@ const SignUp = () => {
     }
     const onSubmit = async (data) => {
         console.log(data);
-        try{
-            const firebaseUser = await createUserWithEmailAndPassword(auth,data.email, data.password);
+        try {
+            const firebaseUser = await createUserWithEmailAndPassword(auth, data.email, data.password);
             console.log(firebaseUser.user.uid);
             const userModel = {
-                userID:firebaseUser.user.uid,
-                email:data.email,
-                password:data.password,
-                name:data.name,
-                location:data.location,
+                userID: firebaseUser.user.uid,
+                email: data.email,
+                password: data.password,
+                name: data.name,
+                location: data.location,
             }
-            fetch('http://localhost:5000/user', {
+            saveToLocalStorage(userModel);
+            getFromLocalStorage();
+            fetch('http://localhost:5000/as', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json'
@@ -70,14 +72,14 @@ const SignUp = () => {
                     }
                 })
 
-        }catch (e) {
+        } catch (e) {
             console.log(e);
         }
-       // createUserWithEmailAndPassword(data.email, data.password).then((user) => console.log(user));
+        // createUserWithEmailAndPassword(data.email, data.password).then((user) => console.log(user));
         // console.log(userDetail);
         //await updateProfile({ displayName: data.name });
-       // console.log('Update Done');
-       // navigate('/');
+        // console.log('Update Done');
+        navigate('/');
     }
     return (
         <div className='flex h-screen justify-center items-center'>
@@ -92,13 +94,13 @@ const SignUp = () => {
                                 <span class="label-text">Enter Your Name</span>
                             </label>
                             <input type="text" placeholder="Your Name " class="input input-bordered w-full max-w-xs"
-                                {...register("name", {
-                                    required: {
-                                        value: true,
-                                        message: 'Name is required'
-                                    }
+                                   {...register("name", {
+                                       required: {
+                                           value: true,
+                                           message: 'Name is required'
+                                       }
 
-                                })}
+                                   })}
                             />
                             <label class="label">
                                 {errors.name?.type === 'required' && <span class="label-text-alt text-red-500">{errors.name.message}</span>}
@@ -112,13 +114,13 @@ const SignUp = () => {
                                 <span class="label-text">Enter Your Location(in detail)</span>
                             </label>
                             <input type="text" placeholder="Your Location here " class="input input-bordered w-full max-w-xs"
-                                {...register("location", {
-                                    required: {
-                                        value: true,
-                                        message: 'Location is required'
-                                    }
+                                   {...register("location", {
+                                       required: {
+                                           value: true,
+                                           message: 'Location is required'
+                                       }
 
-                                })}
+                                   })}
                             />
                             <label class="label">
                                 {errors.location?.type === 'required' && <span class="label-text-alt text-red-500">{errors.location.message}</span>}
@@ -132,16 +134,16 @@ const SignUp = () => {
                                 <span class="label-text">Give your Email</span>
                             </label>
                             <input type="email" placeholder="Your Email here" class="input input-bordered w-full max-w-xs"
-                                {...register("email", {
-                                    required: {
-                                        value: true,
-                                        message: 'Email is required'
-                                    },
-                                    pattern: {
-                                        value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-                                        message: 'Invalid Email'
-                                    }
-                                })}
+                                   {...register("email", {
+                                       required: {
+                                           value: true,
+                                           message: 'Email is required'
+                                       },
+                                       pattern: {
+                                           value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
+                                           message: 'Invalid Email'
+                                       }
+                                   })}
                             />
                             <label class="label">
                                 {errors.email?.type === 'required' && <span class="label-text-alt text-red-500">{errors.email.message}</span>}
@@ -156,16 +158,16 @@ const SignUp = () => {
                                 <span class="label-text">Type Password</span>
                             </label>
                             <input type="password" placeholder="Your Password here" class="input input-bordered w-full max-w-xs"
-                                {...register("password", {
-                                    required: {
-                                        value: true,
-                                        message: 'Password is required'
-                                    },
-                                    minLength: {
-                                        value: 6,
-                                        message: 'Must be 6 character longer'
-                                    }
-                                })}
+                                   {...register("password", {
+                                       required: {
+                                           value: true,
+                                           message: 'Password is required'
+                                       },
+                                       minLength: {
+                                           value: 6,
+                                           message: 'Must be 6 character longer'
+                                       }
+                                   })}
                             />
                             <label class="label">
                                 {errors.password?.type === 'required' && <span class="label-text-alt text-red-500">{errors.password.message}</span>}
