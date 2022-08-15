@@ -71,12 +71,12 @@ const Booking_modal = ({ date, booked, setbooked }) => {
                     <h3 className="font-bold text-lg">{cardtittle} added to the cart</h3>
                     <form onSubmit={handleBooking} className='grid grid-cols-1 gap-5 justify-item-center mt-3'>
                         <input type="text" id="date_field" value={format(date, 'PP')} className="input input-bordered w-full max-w-xs" />
-                        {/* <input type="text" name="name" disabled value={user?.displayName || ''} placeholder="Type here your name" className="input input-bordered w-full max-w-xs" /> */}
-                        <input type="text" name="name" id="name_field" placeholder="Type here your name" className="input input-bordered w-full max-w-xs" />
+                         <input type="text" name="name" disabled value={currentUser?.displayName || ''} placeholder="Type here your name" className="input input-bordered w-full max-w-xs" />
+                        {/*<input type="text" name="name" id="name_field" placeholder="Type here your name" className="input input-bordered w-full max-w-xs" />*/}
                         <input type="text" id="location_field" placeholder="Type here your location" className="input input-bordered w-full max-w-xs" />
                         <input type="text" id="phone_field" name="phone" placeholder="Type here your phone number" className="input input-bordered w-full max-w-xs" />
-                        {/* <input type="email " name="email" disabled value={user?.email || ''} placeholder="Type here your email" className="input input-bordered w-full max-w-xs" /> */}
-                        <input type="email " name="email" id="email_field" placeholder="Type here your email" className="input input-bordered w-full max-w-xs" />
+                         <input type="email " name="email" disabled value={currentUser?.email || ''} placeholder="Type here your email" className="input input-bordered w-full max-w-xs" />
+                        {/*<input type="email " name="email" id="email_field" placeholder="Type here your email" className="input input-bordered w-full max-w-xs" />*/}
                         <select id="number_item" className="select select-bordered w-full max-w-xs">
                             <option disabled selected>Number of Item:</option>
                             <option>1</option>

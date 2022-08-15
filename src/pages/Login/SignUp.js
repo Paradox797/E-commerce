@@ -12,7 +12,7 @@ const saveToLocalStorage = (response)=>{
     localStorage.setItem("currentUser",JSON.stringify(response));
 }
 const getFromLocalStorage = ()=>{
-   let currentUser = localStorage.getItem('currentUser') ;
+    let currentUser = localStorage.getItem('currentUser') ;
     currentUser = JSON.parse(currentUser);
     console.log(currentUser)
 }
