@@ -1,15 +1,19 @@
 import React from 'react'
-import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+//import { useCreateUserWithEmailAndPassword,useSignInWithGoogle, useUpdateProfile } from 'react-firebase-hooks/auth';
 import auth from '../../firebase_init';
 import { useForm } from "react-hook-form";
 import Loading from '../../Shared/Loading';
 import { Link, useNavigate } from 'react-router-dom';
+import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from "react-firebase-hooks/auth";
+import { toast } from "react-toastify";
+
 
 const SignUp = () => {
     const [signInWithGoogle, guser, gloading, gerror] = useSignInWithGoogle(auth);
     const { register, formState: { errors }, handleSubmit } = useForm();
     const [
-        createUserWithEmailAndPassword,
+
         user,
         loading,
         error,
@@ -29,12 +33,43 @@ const SignUp = () => {
     if (guser) {
         console.log(guser);
     }
-    const onSubmit = async data => {
+    const onSubmit = async (data) => {
         console.log(data);
-        createUserWithEmailAndPassword(data.email, data.password).then((user) => console.log(user));
+        try {
+            const firebaseUser = await createUserWithEmailAndPassword(auth, data.email, data.password);
+            console.log(firebaseUser.user.uid);
+            const userModel = {
+                userID: firebaseUser.user.uid,
+                email: data.email,
+                password: data.password,
+                name: data.name,
+                location: data.location,
+            }
+            fetch('http://localhost:5000/as', {
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(userModel)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.success) {
+                        toast(`Successfully added to the cart`)
+                    }
+                    else {
+                        toast.error("You already have booked items today from this service,please try next day")
+                    }
+                })
+
+        } catch (e) {
+            console.log(e);
+        }
+        // createUserWithEmailAndPassword(data.email, data.password).then((user) => console.log(user));
         // console.log(userDetail);
-        await updateProfile({ displayName: data.name });
-        console.log('Update Done');
+        //await updateProfile({ displayName: data.name });
+        // console.log('Update Done');
         navigate('/');
     }
     return (

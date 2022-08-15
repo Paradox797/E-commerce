@@ -7,7 +7,7 @@ const Cart = () => {
     const [user] = useAuthState(auth);
     useEffect(() => {
         if (user) {
-            fetch(`http://localhost:5000/booking?=${user.phone}`)
+            fetch(`http://localhost:5000/booking?customerEmail=${user.emailVerified}`)
                 .then(res => res.json())
                 .then(data => setbook(data));
         }
@@ -74,11 +74,6 @@ const Cart = () => {
 
                     <tfoot>
                         <tr>
-                            <th></th>
-                            <th>Name</th>
-                            <th>Job</th>
-                            <th>Favorite Color</th>
-                            <th></th>
                         </tr>
                     </tfoot>
 
