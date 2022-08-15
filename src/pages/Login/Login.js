@@ -5,6 +5,15 @@ import { useForm } from "react-hook-form";
 import Loading from '../../Shared/Loading';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
+const saveToLocalStorage = (response) => {
+    localStorage.setItem("currentUser", JSON.stringify(response));
+}
+const getFromLocalStorage = () => {
+    let currentUser = localStorage.getItem('currentUser');
+    currentUser = JSON.parse(currentUser);
+    console.log(currentUser)
+}
+
 const Login = () => {
     const [signInWithGoogle, guser, gloading, gerror] = useSignInWithGoogle(auth);
     const { register, formState: { errors }, handleSubmit } = useForm();

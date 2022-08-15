@@ -6,7 +6,7 @@ import Login from './pages/Login/Login';
 import Process from './pages/Process/Process';
 import Account from './pages/Account/Account';
 import AppReview from './pages/AppReview';
-import Cart from './pages/cart';
+import Cart from './pages/Cart';
 import Item from './pages/Item/Item';
 import Signup from './pages/Login/SignUp';
 import Requireauth from './pages/Login/Requireauth';
