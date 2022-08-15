@@ -8,11 +8,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useCreateUserWithEmailAndPassword, useSignInWithGoogle, useUpdateProfile } from "react-firebase-hooks/auth";
 import { toast } from "react-toastify";
 
-const saveToLocalStorage = (response)=>{
-    localStorage.setItem("currentUser",JSON.stringify(response));
+const saveToLocalStorage = (response) => {
+    localStorage.setItem("currentUser", JSON.stringify(response));
 }
-const getFromLocalStorage = ()=>{
-    let currentUser = localStorage.getItem('currentUser') ;
+const getFromLocalStorage = () => {
+    let currentUser = localStorage.getItem('currentUser');
     currentUser = JSON.parse(currentUser);
     console.log(currentUser)
 }
