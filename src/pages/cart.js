@@ -2,18 +2,30 @@ import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../firebase_init';
 
+
+let currentUser;
+const getFromLocalStorage = () => {
+    currentUser = localStorage.getItem('currentUser');
+    currentUser = JSON.parse(currentUser);
+    console.log(currentUser)
+}
+
 const Cart = () => {
+    getFromLocalStorage();
     const [book, setbook] = useState([]);
-    const [user] = useAuthState(auth);
+    //const [user] = useAuthState(auth);
     useEffect(() => {
-        if (user) {
-            fetch(`http://localhost:5000/booking?customerEmail=${user.emailVerified}`)
+        if (currentUser) {
+            fetch(`http://localhost:5000/booking?customerEmail=${currentUser.email}`)
                 .then(res => res.json())
                 .then(data => setbook(data));
         }
+        console.log(book);
 
-    }, [user])
+
+    }, [currentUser])
     return (
+
         <div>My Cart:{book.length}
 
 
@@ -45,11 +57,7 @@ const Cart = () => {
                                     </th>
                                     <td>
                                         <div class="flex items-center space-x-3">
-                                            <div class="avatar">
-                                                <div class="mask mask-squircle w-12 h-12">
-                                                    <img src="/tailwind-css-component-profile-2@56w.png" alt="Avatar Tailwind CSS Component" />
-                                                </div>
-                                            </div>
+
                                             <div>
                                                 <div class="font-bold">{a.customerName}</div>
 
@@ -59,7 +67,7 @@ const Cart = () => {
                                     <td>
                                         {a.bookingName}
 
-                                        <span class="badge badge-ghost badge-sm">Desktop Support Technician</span>
+                                        <span class="badge badge-ghost badge-sm">Thanks for selecting</span>
                                     </td>
                                     <td>{a.bookingAmount}</td>
                                     <th>

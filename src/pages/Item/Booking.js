@@ -18,7 +18,7 @@ const Booking = ({ service, setbooked }) => {
                 <div className="card-actions justify-end">
                     <div className="navbar-end">
                         <label
-                            for="BookingModal"
+                            htmlFor="BookingModal"
                             disabled={item_number == 0}
                             onClick={() => setbooked(service)}
                             className="btn btn-primary uppercase bg-gradient-to-r from-indigo-500 via-purple-500 to-cyan-500 hover:from-pink-500 hover:to-yellow-500 ...">Add to cart
