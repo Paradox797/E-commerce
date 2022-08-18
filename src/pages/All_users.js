@@ -3,15 +3,31 @@ import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import auth from '../firebase_init';
 
+import { toast } from 'react-toastify';
+
 const updateAdmin = (user) => {
-    user.isAdmin = !user.isAdmin;
+    // user.isAdmin = !user.isAdmin;
+    // console.log(user);
     fetch('http://localhost:5000/update', {
         method: 'PUT',
         headers: {
             'content-type': 'application/json'
         },
+
         body: JSON.stringify(user)
     })
+
+        .then(res => res.json())
+        .then(data => {
+            //console.log(data);
+            if (data.success) {
+                toast(`Successfully updated`)
+            }
+            else {
+                toast.error("Unsuccessful")
+            }
+            //setbooked(null);
+        });
 }
 
 

@@ -15,6 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import MyDashboard from './pages/MyDashboard';
 import MyReview from './pages/MyReview';
 import All_users from './pages/All_users';
+import UploadItems from './pages/UploadItems';
 
 function App() {
   return (
@@ -29,6 +30,8 @@ function App() {
 
           <Route path="/Item" element={<Requireauth><Item /></Requireauth>} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/uploadItems" element={<Requireauth><UploadItems /></Requireauth>} />
+
           <Route path="/myDashboard" element={
             <Requireauth>
               <MyDashboard />

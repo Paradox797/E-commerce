@@ -16,6 +16,7 @@ const NavBar = () => {
         <li><Link to="/">Home</Link></li>
         <li><Link to="/account">Account</Link></li>
         <li><Link to="/process">Process</Link></li>
+        {/* <li><Link to="/uploadItems">UploadItems</Link></li> */}
         {
             user && <li><Link to="/myDashboard">Dashboard</Link></li>
         }

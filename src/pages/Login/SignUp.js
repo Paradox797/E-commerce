@@ -51,7 +51,7 @@ const SignUp = () => {
                 password: data.password,
                 name: data.name,
                 location: data.location,
-                isAdmin: false,
+                isAdmin: "false",
             }
             saveToLocalStorage(userModel);
             getFromLocalStorage();
