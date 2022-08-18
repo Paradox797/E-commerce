@@ -51,6 +51,7 @@ const SignUp = () => {
                 password: data.password,
                 name: data.name,
                 location: data.location,
+                isAdmin: false,
             }
             saveToLocalStorage(userModel);
             getFromLocalStorage();
@@ -61,14 +62,19 @@ const SignUp = () => {
                 },
                 body: JSON.stringify(userModel)
             })
+
+
+
                 .then(res => res.json())
                 .then(data => {
                     console.log(data);
+
                     if (data.success) {
-                        toast(`Successfully added to the cart`)
+                        toast(`Welcome to our service`)
+                        navigate('/');
                     }
                     else {
-                        toast.error("You already have booked items today from this service,please try next day")
+                        toast.error("Your email is aldeary in use")
                     }
                 })
 
@@ -79,7 +85,7 @@ const SignUp = () => {
         // console.log(userDetail);
         //await updateProfile({ displayName: data.name });
         // console.log('Update Done');
-        navigate('/');
+
     }
     return (
         <div className='flex h-screen justify-center items-center'>
@@ -94,13 +100,13 @@ const SignUp = () => {
                                 <span class="label-text">Enter Your Name</span>
                             </label>
                             <input type="text" placeholder="Your Name " class="input input-bordered w-full max-w-xs"
-                                   {...register("name", {
-                                       required: {
-                                           value: true,
-                                           message: 'Name is required'
-                                       }
+                                {...register("name", {
+                                    required: {
+                                        value: true,
+                                        message: 'Name is required'
+                                    }
 
-                                   })}
+                                })}
                             />
                             <label class="label">
                                 {errors.name?.type === 'required' && <span class="label-text-alt text-red-500">{errors.name.message}</span>}
@@ -114,13 +120,13 @@ const SignUp = () => {
                                 <span class="label-text">Enter Your Location(in detail)</span>
                             </label>
                             <input type="text" placeholder="Your Location here " class="input input-bordered w-full max-w-xs"
-                                   {...register("location", {
-                                       required: {
-                                           value: true,
-                                           message: 'Location is required'
-                                       }
+                                {...register("location", {
+                                    required: {
+                                        value: true,
+                                        message: 'Location is required'
+                                    }
 
-                                   })}
+                                })}
                             />
                             <label class="label">
                                 {errors.location?.type === 'required' && <span class="label-text-alt text-red-500">{errors.location.message}</span>}
@@ -134,16 +140,16 @@ const SignUp = () => {
                                 <span class="label-text">Give your Email</span>
                             </label>
                             <input type="email" placeholder="Your Email here" class="input input-bordered w-full max-w-xs"
-                                   {...register("email", {
-                                       required: {
-                                           value: true,
-                                           message: 'Email is required'
-                                       },
-                                       pattern: {
-                                           value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
-                                           message: 'Invalid Email'
-                                       }
-                                   })}
+                                {...register("email", {
+                                    required: {
+                                        value: true,
+                                        message: 'Email is required'
+                                    },
+                                    pattern: {
+                                        value: /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/,
+                                        message: 'Invalid Email'
+                                    }
+                                })}
                             />
                             <label class="label">
                                 {errors.email?.type === 'required' && <span class="label-text-alt text-red-500">{errors.email.message}</span>}
@@ -158,16 +164,16 @@ const SignUp = () => {
                                 <span class="label-text">Type Password</span>
                             </label>
                             <input type="password" placeholder="Your Password here" class="input input-bordered w-full max-w-xs"
-                                   {...register("password", {
-                                       required: {
-                                           value: true,
-                                           message: 'Password is required'
-                                       },
-                                       minLength: {
-                                           value: 6,
-                                           message: 'Must be 6 character longer'
-                                       }
-                                   })}
+                                {...register("password", {
+                                    required: {
+                                        value: true,
+                                        message: 'Password is required'
+                                    },
+                                    minLength: {
+                                        value: 6,
+                                        message: 'Must be 6 character longer'
+                                    }
+                                })}
                             />
                             <label class="label">
                                 {errors.password?.type === 'required' && <span class="label-text-alt text-red-500">{errors.password.message}</span>}

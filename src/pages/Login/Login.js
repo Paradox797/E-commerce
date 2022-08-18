@@ -5,6 +5,7 @@ import auth from '../../firebase_init';
 import { useForm } from "react-hook-form";
 import Loading from '../../Shared/Loading';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import useToken from '../../useToken';
 
 const saveToLocalStorage = (response) => {
     localStorage.setItem("currentUser", JSON.stringify(response));
@@ -22,6 +23,9 @@ const Login = () => {
     let loading;
     let error;
     let signInerror;
+
+    //const [token] = useToken(user || guser);
+
     const navigate = useNavigate();
     const location = useLocation();
     let from = location.state?.from?.pathname || "/";
